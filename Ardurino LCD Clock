@@ -1,0 +1,38 @@
+// LiquidCrystal - Version: Latest 
+#include <LiquidCrystal.h>
+
+//LiquidCrystal lcd(GN,Vcc,Register selector,pin1,GN,pin2)
+LiquidCrystal lcd(GN,Vcc,Register selector,pin1,GN,pin2);
+int SS_counter=0;
+int MM_counter=0;
+int HH_counter=0;
+
+void setup() {
+  Serial.begin(9600) // ask sir if this is needed or not
+  lcd.begin(16,2);  // column,row in lcd
+}
+
+void loop() {
+  lcd.setCursor(2,0);
+  lcd.print("HH : MM : SS"); //take 12 slots on top
+  lcd.setCursor(13,1); //position of slot below ss
+  lcd.print(SS_counter);
+  lcd.setCursor(8,1); //position of slot below mm
+  lcd.print(MM_counter);
+  lcd.setCursor(2,1); //position of slot one box behind hh as hours may go in 100s if clock runs for more than 4 dayz
+  lcd.print(HH_counter);
+  delay(1000);  // generally after long period of time the clock gets uncalibrated. Generally RCD used to check time which uses vibrations of crystal as measurement of time
+  counter++;
+  if (SS_counter>59){
+    lcd.clear();
+    MM_counter++;
+    SS_counter == 0; //just in case to convert seconds back to 0. ask sir to confirm
+  }
+  if (MM_counter>59){
+    lcd.clear();
+    HH_counter++;
+    MM_counter == 0;
+  }
+}
+
+
