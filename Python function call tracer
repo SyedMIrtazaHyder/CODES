@@ -1,0 +1,59 @@
+import sys
+import trace
+import os
+import re
+import shutil
+
+'''apparently u can just use sys.settrace for this. what does frame, event and args means idk.
+import sys
+def count_calls(f, *args, **kwargs):
+    total = 0
+    def count(frame, event, arg):
+        nonlocal total
+        if event == 'call':
+            total += 1
+    sys.settrace(count)
+    ret = f(*args, **kwargs)
+    return total -1, ret'''
+    
+def add(a,b):
+    return a+b
+    
+def addten(x):
+    return add(10, x)
+    
+def adddoubleten(x):
+    return add(addten(x),addten(x))
+calls=0
+tracer=trace.Trace(ignoredirs=[sys.prefix, sys.exec_prefix], count=1, trace=1)
+'''tracer.run('adddoubleten(7)')
+r=tracer.results()
+r.write_results(show_missing=True, coverdir=".")'''
+#print(adddoubleten(7))
+#r=sys.builtin_module_names
+#tracedfunc=sys.call_tracing(add, (6,7))
+q=tracer.runfunc(adddoubleten, 8)
+r=tracer.results()
+#print(r)
+r.write_results(coverdir="tempdir")
+#os.listdir("tempdir")
+#print(os.listdir("tempdir"))#gives path to directory
+#print(sys.path)
+#print(os.listdir())
+f=open("tempdir/main.cover","r")
+#shutil.copy2(tempdir, newfile)
+#f.write(tempdir)
+#range(5:)
+#range(4,5,7)
+regex="[^(\(|,)]\d+:"
+recursions=re.findall(regex, f.read())
+#print("Current working directory: {0}".format(os.getcwd()))
+f.close()
+for numbers in recursions:
+    if int(numbers[1])>1:
+        calls+=int(numbers[1])
+print(calls)
+
+
+
+
