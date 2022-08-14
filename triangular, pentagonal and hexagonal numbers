@@ -1,0 +1,26 @@
+def triangle_nums(x):
+    liste=[]
+    for n in range(1,x+1):
+        tri_nums=n*(n+1)/2
+        liste.append(tri_nums)
+    return set(liste)
+
+def pentagon_nums(x):
+    liste=[]
+    for n in range(1,x+1):
+        pent_nums=n*((3*n)-1)/2
+        liste.append(pent_nums)
+    intersection = set(liste) & triangle_nums(x)
+    return intersection
+def hexagon_nums(x):
+    liste=[]
+    for n in range(1,x+1):
+        hex_nums=n*((2*n)-1)
+        liste.append(hex_nums)
+    intersection = set(liste) & pentagon_nums(x)
+    return intersection
+    
+print(hexagon_nums(100000))
+print(pentagon_nums(100000))
+print(triangle_nums(100000))     
+                
