@@ -1,0 +1,56 @@
+#define echo //pin
+#define trig //pin2
+#define LED1 //pin
+#define LED2 //pin
+#define LED3 //pin
+#define LED4 //pin
+#define LED5 //pin
+#define LED6 //pin
+#define buzzer //pin
+
+
+void setup() {
+  PinMode(echo, INPUT);
+  PinMode(trig, OUTPUT);
+  PinMode(LED1, OUTPUT);
+  PinMode(LED2, OUTPUT);
+  PinMode(LED3, OUTPUT);
+  PinMode(LED4, OUTPUT);
+  PinMode(LED5, OUTPUT);
+  PinMode(LED6, OUTPUT);
+  PinMode(buzzer, OUTPUT);
+  Serial.begin(9600)
+}
+
+void loop() {
+  digitalWrite(trig, LOW);
+  delay(10) //to remove background sounds
+
+  digitalWrite(trig, HIGH);
+  delay(10) //produce ultra sound
+  digitalWrite(trig, LOW);
+  double   //for larger values
+  pulse = pulseIn(echo, HIGH); // measures the time period of a high or low pulse input signal
+  float distance = (pulse / 58.4); //distance from which US detected defined
+  //LED shines according to distance
+  //Serial.print(distance in cm);
+  if (distance = < 60) {
+    digitalWrite(LED1, HIGH);
+  }
+  if (distance = < 50) {
+    digitalWrite(LED2, HIGH);
+  }
+  if (distance = < 40) {
+    digitalWrite(LED3, HIGH);
+  }
+  if (distance = < 30) {
+    digitalWrite(LED4, HIGH);
+  }
+  if (distance = < 20) {
+    digitalWrite(LED5, HIGH);
+  }
+  if (distance = < 10) {
+    digitalWrite(LED6, HIGH);
+    digitalWrite(buzzer, HIGH);
+  }
+}
